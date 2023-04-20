@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Users = require("./user");
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config')[env]
@@ -12,5 +13,8 @@ const sequelize = new Sequelize(
 )
 
 db.sequelize = sequelize;
+db.Users = Users;
+
+Users.init(sequelize);
 
 module.exports = db;

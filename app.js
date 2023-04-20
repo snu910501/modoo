@@ -29,12 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use(function (err, req, res, next) {
-
-  console.log('hihi');
-
   console.error(err);
   res.status(err.status || 500).json({ message: err.message })
-
 });
 
 app.listen(app.get("port"), () => {

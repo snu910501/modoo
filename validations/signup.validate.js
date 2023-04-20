@@ -2,7 +2,6 @@ const Error = require('../modules/errorHandler')
 
 exports.validatePw = (userPassword, userPasswordCheck) => {
   const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,16})/;
-  console.log('length', userPassword)
   try {
     if (!passwordRegExp.test(userPassword)) {
       throw new Error(`비밀번호의 길이는 8~16자리 영문과 숫자의 조합입니다.`, 401);
