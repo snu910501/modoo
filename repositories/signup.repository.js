@@ -4,7 +4,6 @@ class SignUpRepository {
   signup = async (
     userId,
     userPassword,
-    userPasswordCheck,
     userName,
     userEmail,
     userPhoneNumber
@@ -13,13 +12,12 @@ class SignUpRepository {
       const user = await User.create({
         userId,
         userPassword,
-        userPasswordCheck,
         userName,
         userEmail,
-        userPhoneNumber
-      })
+        userPhoneNumber,
+      });
 
-      return user
+      return user;
     } catch (err) {
       throw err;
     }
@@ -28,13 +26,13 @@ class SignUpRepository {
   findUser = async (userId) => {
     try {
       const user = await User.findOne({
-        where: { userId }
-      })
+        where: { userId },
+      });
       return user;
     } catch (err) {
       throw err;
     }
-  }
+  };
 }
 
 module.exports = SignUpRepository;

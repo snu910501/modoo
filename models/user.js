@@ -12,10 +12,6 @@ module.exports = class User extends Sequelize.Model {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userPasswordCheck: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       userName: {
         type: Sequelize.STRING,
         allowNull: false,

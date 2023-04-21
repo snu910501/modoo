@@ -1,5 +1,6 @@
 const SignupRepository = require('../repositories/signUp.repository');
 const validate = require('../validations/signup.validate');
+const bcrypt = require('bcrypt');
 const Error = require('../modules/errorHandler');
 
 class SignupService {
@@ -14,9 +15,13 @@ class SignupService {
     userPhoneNumber
   ) => {
     try {
+      const saltRounds = 12;
+
       validate.validateId(userId);
       validate.validatePw(userPassword, userPasswordCheck);
 
+      const hasedUserPassword = await bcrypt.hash(userPassword,saltRounds);
+      userPassword = hasedUserPassword;
       const user = await this.signupRepository.findUser(userId);
       if (user) {
         throw new Error('아이디가 중복됩니다.', 401);
@@ -24,7 +29,6 @@ class SignupService {
         await this.signupRepository.signup(
           userId,
           userPassword,
-          userPasswordCheck,
           userName,
           userEmail,
           userPhoneNumber

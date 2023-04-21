@@ -13,8 +13,7 @@ class SignupController {
         userEmail,
         userPhoneNumber,
       } = req.body;
-
-      console.log('userpassword con', userPassword);
+      
       await this.signupService.signup(
         userId,
         userPassword,

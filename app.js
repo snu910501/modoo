@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use(function (err, req, res, next) {
-  console.log('error 로킹 필ㅇ요');
   console.error(err);
   res.status(err.status || 500).json({ message: err.message })
 });
