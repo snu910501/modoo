@@ -36,7 +36,7 @@ class SignupService {
         return;
       }
     } catch (err) {
-      throw err;
+      next(err);
     }
   }
 }
