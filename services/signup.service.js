@@ -1,4 +1,4 @@
-const SignupRepository = require('../repositories/signUp.repository');
+const SignupRepository = require('../repositories/signup.repository');
 const validate = require('../validations/signup.validate');
 const bcrypt = require('bcrypt');
 const Error = require('../modules/errorHandler');

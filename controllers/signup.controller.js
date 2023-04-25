@@ -1,4 +1,4 @@
-const SignupService = require("../services/signUp.service");
+const SignupService = require("../services/signup.service");
 
 class SignupController {
   signupService = new SignupService();
