@@ -19,7 +19,7 @@ exports.validatePw = (userPassword, userPasswordCheck) => {
 }
 
 exports.validateId = (userId) => {
-  const usernameRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,16})/;
+  const usernameRegExp = /^[A-Za-z0-9]{6,16}$/;
   try {
     if (!usernameRegExp.test(userId)) {
       throw new Error('아이디가 조건에 맞지 않습니다.', 401);
