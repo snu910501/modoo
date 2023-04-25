@@ -30,7 +30,7 @@ class SignUpRepository {
       });
       return user;
     } catch (err) {
-      next(err);
+      throw(err);
     }
   };
 }
