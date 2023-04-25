@@ -23,9 +23,10 @@ sequelize
   });
 
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+
 
 app.use('/', indexRouter);
 app.use(function (err, req, res, next) {
