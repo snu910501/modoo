@@ -14,7 +14,7 @@ class SignupController {
         userEmail,
         userPhoneNumber,
       } = req.body;
-      console.log(userId,userPassword,userPasswordCheck);
+      console.log(userId, userPassword, userPasswordCheck);
       await this.signupService.signup(
         userId,
         userPassword,
@@ -22,7 +22,7 @@ class SignupController {
         userName,
         userEmail,
         userPhoneNumber,);
-
+      console.log('hihihi');
       return res.status(200).json({ message: '회원가입 성공' })
     } catch (err) {
       next(err);
