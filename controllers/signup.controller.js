@@ -5,6 +5,7 @@ class SignupController {
 
   signup = async (req, res, next) => {
     try {
+      console.log('req Body', req.body);
       const {
         userId,
         userPassword,
@@ -13,7 +14,7 @@ class SignupController {
         userEmail,
         userPhoneNumber,
       } = req.body;
-      console.log(userId,userPassword,userPasswordChek);
+      console.log(userId,userPassword,userPasswordCheck);
       await this.signupService.signup(
         userId,
         userPassword,
