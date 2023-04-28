@@ -2,23 +2,25 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
+const passport = require('passport');
 const dotenv = require("dotenv");
+const { sequelize } = require("./models");
 
 const indexRouter = require("./routes/index");
+const passportConfig = require('./passport/index');
 const errorHandler = require('./modules/errorHandler');
 
 dotenv.config();
 const app = express();
+passportConfig();
 
 const corsOptions = {
-  origin: ['http://100.27.18.140', 'http://localhost:3000'],
+  origin: ['http://100.27.18.140', 'http://localhost:3000', 'http://localhost:8080'],
   credentials: true,
   optionsSuccessStatus: 200
 };
 
 app.set("port", process.env.PORT || "3000");
-
-const { sequelize } = require("./models");
 
 sequelize
   .sync({ force: false })
@@ -39,7 +41,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use(function (err, req, res, next) {
   console.error('err', err);
-  res.status(err.status || 500).json({ message: err.message })
+  res.status(err.status || 500).json({ message: err.message });
 });
 
 app.listen(app.get("port"), () => {
