@@ -21,7 +21,7 @@ class SignupController {
         userName,
         userEmail,
         userPhoneNumber,);
-      console.log('hihihi');
+
       return res.status(200).json({ message: '회원가입 성공' })
     } catch (err) {
       next(err);
