@@ -1,4 +1,5 @@
 const { S3 } = require("aws-sdk");
+const iconv = require('iconv-lite');
 const fs = require("fs");
 
 require("dotenv").config();
@@ -29,6 +30,6 @@ module.exports = uploadImageToS3 = async (images) => {
   result.map(v => {
     url.push({ location: v.Location, fileName: v.key })
   });
-  console.log('url', url);
-  return url;
+
+  return url[0].location;
 };

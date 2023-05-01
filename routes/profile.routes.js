@@ -30,4 +30,6 @@ router.post(
   ]), profileController.setProfile
 );
 
+router.get('/', profileController.getProfile)
+
 module.exports = router;
