@@ -41,7 +41,7 @@ module.exports = class Estate extends Sequelize.Model {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      moveInData: {
+      moveInDate: {
         type: Sequelize.STRING,
         allowNull: false,
       },
