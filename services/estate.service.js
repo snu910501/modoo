@@ -33,7 +33,6 @@ class EstateService {
       //각 항목별로 유효성 검사를 실시해야함
       console.log('hello', options);
       // options가 배열에 담겨져 오기 때문에
-      const optionString = options.join(',');
 
       //이미지 업로드
       const url = await uploadImageToS3(images);
@@ -58,7 +57,7 @@ class EstateService {
         parking,
         elevator,
         pet,
-        optionString,
+        options,
         detail,
       );
 
