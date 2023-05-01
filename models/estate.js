@@ -21,6 +21,10 @@ module.exports = class Estate extends Sequelize.Model {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      dong: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       transactionType: {
         type: Sequelize.STRING,
         allowNull: false,

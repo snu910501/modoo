@@ -31,6 +31,7 @@ class EstateRepository {
         userId,
         typeOfProperty,
         addressOfProperty,
+        dong,
         transactionType,
         deposit,
         monthly,
