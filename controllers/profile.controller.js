@@ -19,6 +19,8 @@ class ProfileController {
         userBusinessLicense,
       } = req.files;
 
+      console.log(userProfileImg, userBusinessLicense);
+
       await this.profileService.setProfile(
         userId,
         userName,
