@@ -6,6 +6,7 @@ class EstateRepository {
     userId,
     typeOfProperty,
     addressOfProperty,
+    dong,
     transactionType,
     deposit,
     monthly,
@@ -23,6 +24,8 @@ class EstateRepository {
     pet,
     options,
     detail,
+    lowestFloor,
+    highestFloor, 
     url
   ) => {
     try {
@@ -48,6 +51,8 @@ class EstateRepository {
         elevator,
         pet,
         options,
+        lowestFloor,
+        highestFloor, 
         detail,
       });
 

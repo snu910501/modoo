@@ -87,11 +87,19 @@ module.exports = class Estate extends Sequelize.Model {
       },
       options: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       detail: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      lowestFloor: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      highestFloor: {
+        type: Sequelize.STRING,
+        allowNull: true,
       }
     },
       {
