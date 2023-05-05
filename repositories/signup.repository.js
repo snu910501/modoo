@@ -6,7 +6,8 @@ class SignUpRepository {
     userPassword,
     userName,
     userEmail,
-    userPhoneNumber
+    userPhoneNumber,
+    userKey
   ) => {
     try {
       const user = await User.create({
@@ -15,6 +16,7 @@ class SignUpRepository {
         userName,
         userEmail,
         userPhoneNumber,
+        userKey
       });
 
       return user;
