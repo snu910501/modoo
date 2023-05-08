@@ -1,6 +1,7 @@
 const SignupRepository = require('../repositories/signup.repository');
 const validate = require('../validations/signup.validate');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 const Error = require('../modules/errorHandler');
 
 class SignupService {
@@ -16,10 +17,11 @@ class SignupService {
   ) => {
     try {
       const saltRounds = 12;
+      const userKey = uuid.v4();
 
       validate.validateId(userId);
       validate.validatePw(userPassword, userPasswordCheck);
-
+      console.log('hihi useKEy', userKey);
       const hasedUserPassword = await bcrypt.hash(userPassword,saltRounds);
       userPassword = hasedUserPassword;
       const user = await this.signupRepository.findUser(userId);
@@ -31,7 +33,8 @@ class SignupService {
           userPassword,
           userName,
           userEmail,
-          userPhoneNumber
+          userPhoneNumber,
+          userKey,
         )
         return;
       }

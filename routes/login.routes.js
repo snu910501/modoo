@@ -3,6 +3,11 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const multer = require('multer');
+const env = require('dotenv');
+
+const {isLoggedIn} = require('../middlewares/auth');
+
+env.config();
 
 const LoginController = require('../controllers/login.controller');
 const loginController = new LoginController();
@@ -21,7 +26,7 @@ const upload = multer({
   },
 });
 
-router.post('/', upload.array('images', 5), (req, res, next) => {
+router.post('/', upload.array('images', 1), (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
       return next(err);
@@ -30,7 +35,7 @@ router.post('/', upload.array('images', 5), (req, res, next) => {
       return res.status(401).json({ message: info.message })
     }
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET)
-    return res.status(200).json({ token })
+    return res.status(200).json({ token: token, userKey : user.userKey })
   })(req, res, next);
 });
 

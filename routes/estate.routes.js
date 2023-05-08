@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const {isLoggedIn} = require("../middlewares/auth");
 
 const EstateController = require('../controllers/estate.controller');
 const estateController = new EstateController();
