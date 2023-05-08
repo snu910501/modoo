@@ -41,7 +41,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use(function (err, req, res, next) {
   console.error('err', err);
-  res.status(err.status || 500).json({ message: err.message });
+  res.status(err.status || 500).json({ message: err.errorMessage });
 });
 
 app.listen(app.get("port"), () => {
