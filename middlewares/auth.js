@@ -1,40 +1,18 @@
 const Error = require("../modules/errorHandler");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 const isLoggedIn = async (req, res, next) => {
   try {
     console.log('headerssz', req.headers);
-    const { token, userKey } = req.cookies;
-    if (!userKey && !token) {
-        const error = new Error(501, "비정상적인 접근이군요.");
-        throw error;
-    }
-    if (!userKey && token) {
-      res.cookie("token", "", {
-        sameSite: "none",
-        //   secure: true,
-        httpOnly: true,
-        maxAge: 0,
-      });
-      res.cookie("userKey", "", {
-        sameSite: "none",
-        //   secure: true,
-        httpOnly: true,
-        maxAge: 0,
-      });
-      const error = new Error(501, "비정상적인 접근이군요.");
-      throw error;
+    const { authorization } = req.headers;
+    const [authType, authToken] = (authorization || '').split(' ');
+    if (!authToken || authType !== 'Bearer') {
+      throw new Error(501,'잘못된 접근입니다.');
     }
 
-    if (userKey) {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if (decoded) {
-        res.locals = result;
-      } else {
-        const error = new Error(501, "비정상적인 접근이군요.");
-        throw error;
-      }
-    }
+    const { userId } = jwt.verify(authToken, SECRET_KEY);
+    res.locals.user = userId
 
     next();
   } catch (err) {
