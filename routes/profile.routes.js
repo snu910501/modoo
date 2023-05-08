@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const iconv = require('iconv-lite');
 const router = express.Router();
+const {isLoggedIn} = require('../middlewares/auth');
 
 const ProfileController = require('../controllers/profile.controller');
 const profileController = new ProfileController();
@@ -30,6 +31,6 @@ router.post(
   ]), profileController.setProfile
 );
 
-router.get('/', profileController.getProfile)
+router.get('/', isLoggedIn,profileController.getProfile)
 
 module.exports = router;
