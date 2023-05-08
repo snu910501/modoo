@@ -6,7 +6,6 @@ class ProfileController {
   setProfile = async (req, res, next) => {
     try {
       const {
-        userId,
         userName,
         userCompanyTelNumber,
         userPhoneNumber,
@@ -19,7 +18,7 @@ class ProfileController {
         userBusinessLicense,
       } = req.files;
 
-      console.log(userProfileImg, userBusinessLicense);
+      const userId = res.locals.userId;
 
       await this.profileService.setProfile(
         userId,
@@ -40,7 +39,7 @@ class ProfileController {
 
   getProfile = async (req, res, next) => {
     try {
-      const { userId } = req.body;
+      const userId = res.locals.userId;
       const user = await this.profileService.getProfile(userId);
 
       return res.status(200).json({ user })

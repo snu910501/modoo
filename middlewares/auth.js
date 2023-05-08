@@ -8,14 +8,14 @@ const isLoggedIn = async (req, res, next) => {
     const { authorization } = req.headers;
     const [authType, authToken] = (authorization || '').split(' ');
     if (!authToken || authType !== 'Bearer') {
-      throw new Error(501,'잘못된 접근입니다.');
+      throw new Error(501, '잘못된 접근입니다.');
     }
-    const [accessToken, userKey] = authToken.split(':');
-    console.log('heoo',accessToken, userKey);
-    const { userId } = jwt.verify(accessToken, process.env.JWT_SECRET);
-    console.log('userId', userId);
-    res.locals.user = userId
+    const { userkey } = req.headers;
+    console.log('heoo', authToken, userkey);
+    const { userId } = jwt.verify(authToken, process.env.JWT_SECRET);
 
+    res.locals.userId = userId
+    console.log('ppa');
     next();
   } catch (err) {
     next(err);
