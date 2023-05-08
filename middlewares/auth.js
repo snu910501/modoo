@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const isLoggedIn = async (req, res, next) => {
   try {
-    console.log('cookieszzz', req.cookies);
+    console.log('headerssz', req.headers);
     const { token, userKey } = req.cookies;
     if (!userKey && !token) {
         const error = new Error(501, "비정상적인 접근이군요.");
