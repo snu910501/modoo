@@ -12,7 +12,7 @@ const isLoggedIn = async (req, res, next) => {
     }
     const [accessToken, userKey] = authToken.split(':');
     console.log(userKey);
-    const { userId } = jwt.verify(accessToken, process.env.SECRET_KEY);
+    const { userId } = jwt.verify(accessToken, process.env.JWT_SECRET);
     res.locals.user = userId
 
     next();
