@@ -26,7 +26,7 @@ class SignupService {
       userPassword = hasedUserPassword;
       const user = await this.signupRepository.findUser(userId);
       if (user) {
-        throw new Error('아이디가 중복됩니다.', 401);
+        throw new Error(401,'아이디가 중복됩니다.' );
       } else {
         await this.signupRepository.signup(
           userId,

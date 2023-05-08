@@ -21,6 +21,6 @@ const upload = multer({
   },
 });
 
-router.post('/', upload.array('images', 8), estateController.setEstate);
+router.post('/',isLoggedIn, upload.array('images', 8), estateController.setEstate);
 
 module.exports = router;
