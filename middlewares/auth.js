@@ -11,7 +11,7 @@ const isLoggedIn = async (req, res, next) => {
       throw new Error(501,'잘못된 접근입니다.');
     }
 
-    const { userId } = jwt.verify(authToken, SECRET_KEY);
+    const { userId } = jwt.verify(authToken, process.env.SECRET_KEY);
     res.locals.user = userId
 
     next();
