@@ -10,8 +10,9 @@ const isLoggedIn = async (req, res, next) => {
     if (!authToken || authType !== 'Bearer') {
       throw new Error(501,'잘못된 접근입니다.');
     }
-
-    const { userId } = jwt.verify(authToken, process.env.SECRET_KEY);
+    const [accessToken, userKey] = authToken.split(':');
+    console.log(userKey);
+    const { userId } = jwt.verify(accessToken, process.env.SECRET_KEY);
     res.locals.user = userId
 
     next();
