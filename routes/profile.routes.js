@@ -24,7 +24,7 @@ const upload = multer({
 });
 
 router.post(
-  "/",
+  "/", isLoggedIn,
   upload.fields([
     { name: "userProfileImg", maxCount: 1 },
     { name: "userBusinessLicense", maxCount: 1 },
