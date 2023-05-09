@@ -1,10 +1,9 @@
 const { S3 } = require("aws-sdk");
 const fs = require("fs");
-const iconv = require('iconv-lite');
 
 require("dotenv").config();
 
-module.exports = uploadImageToS3 = async (images) => {
+module.exports = uploadImageToS3 = async (userId, images) => {
   let url = [];
   const s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -14,13 +13,13 @@ module.exports = uploadImageToS3 = async (images) => {
   console.log('images', images);
   const promiseList = images.map((file) => {
     const fileStream = fs.createReadStream(file.path);
-    const decodedFilename = iconv.decode(file.originalname, 'utf-8');
+    const fileExt = file.originalname.split('.')[1];
     // buffer, stream
 
     return s3.upload({
       Bucket: 'modoorealestate',
       // 파일명
-      Key: `profile/${decodedFilename}`,
+      Key: `profile/${userId}.${fileExt}`,
       Body: fileStream,
     })
       .promise();

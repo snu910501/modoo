@@ -15,7 +15,11 @@ module.exports = class PropertyImage extends Sequelize.Model {
       imgOfUrl: {
         type: Sequelize.STRING,
         allowNull: false,
-      }
+      },
+      imgIndex: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
 
     },
       {

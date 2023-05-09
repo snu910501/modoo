@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const {isLoggedIn} = require("../middlewares/auth");
+const { isLoggedIn } = require("../middlewares/auth");
 
 const EstateController = require('../controllers/estate.controller');
 const estateController = new EstateController();
@@ -13,7 +13,7 @@ const upload = multer({
     //   cb(null, "./uploads");
     // },
     filename: function (req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, `${file.originalname}`);
     },
   }),
   limits: {
@@ -21,6 +21,7 @@ const upload = multer({
   },
 });
 
-router.post('/',isLoggedIn, upload.array('images', 8), estateController.setEstate);
+router.post('/', isLoggedIn, upload.array('images', 8), estateController.setEstate);
+router.get('/list', isLoggedIn, estateController.getEstateList);
 
 module.exports = router;

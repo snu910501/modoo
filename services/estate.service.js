@@ -36,10 +36,6 @@ class EstateService {
       //각 항목별로 유효성 검사를 실시해야함
       // options가 배열에 담겨져 오기 때문에
 
-      //이미지 업로드
-      console.log('images check', userId, images);
-      const url = await uploadImageToS3(images);
-
       const estate = await this.estateRepository.setEstate(
         userId,
         typeOfProperty,
@@ -67,11 +63,22 @@ class EstateService {
         highestFloor,
       );
 
-
+      //이미지 업로드
+      const url = await uploadImageToS3(estate.estateId, images);
       await this.estateRepository.setPropertyImg(estate.estateId, url)
 
 
       return;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  getEstateList = async (userId) => {
+    try {
+      const estateList = await this.estateRepository.getEstateList(userId);
+
+      return estateList;
     } catch (err) {
       throw err;
     }

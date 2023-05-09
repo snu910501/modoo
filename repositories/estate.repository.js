@@ -1,5 +1,5 @@
-const Estate = require('../models/estate');
-const PropertyImg = require('../models/propertyImg');
+const Estate = require("../models/estate");
+const PropertyImg = require("../models/propertyImg");
 
 class EstateRepository {
   setEstate = async (
@@ -61,23 +61,58 @@ class EstateRepository {
       return estate;
     } catch (err) {
       throw err;
-    };
+    }
   };
 
   setPropertyImg = async (estateId, urls) => {
     try {
-      await Promise.all(urls.map(async (url) => {
-        console.log('hi', url);
-        await PropertyImg.create({
-          estateId: estateId,
-          imgOfUrl: url.location
+      let num = 1;
+      await Promise.all(
+        urls.map(async (url) => {
+          await PropertyImg.create({
+            estateId: estateId,
+            imgOfUrl: url.location,
+            imgIndex: num++,
+          });
         })
-      }))
+      );
       return;
     } catch (err) {
       throw err;
     }
-  }
+  };
+
+  getEstateList = async (userId) => {
+    try {
+      const estateList = await Estate.findAll({
+        where: {
+          userId: userId,
+        },
+        attributes: [
+          "estateId",
+          "typeOfProperty",
+          "addressOfProperty",
+          "transactionType",
+          "deposit",
+          "monthly",
+          "price",
+          "exclusiveArea",
+          "numOfRoom",
+          "numOfBath",
+          "estateId",
+        ],
+      });
+
+      // const imgUrl = []
+      // const imgList = estateList.map(async(list) => {
+      //   const url = await PropertyImg.findOne()
+      // })
+
+      return estateList
+    } catch (err) {
+      throw err;
+    }
+  };
 }
 
 module.exports = EstateRepository;
