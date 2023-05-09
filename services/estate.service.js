@@ -15,6 +15,7 @@ class EstateService {
     price,
     maintenanceCost,
     moveInDate,
+    moveInDateInput,
     supplyArea,
     exclusiveArea,
     numOfRoom,
@@ -28,7 +29,7 @@ class EstateService {
     detail,
     lowestFloor,
     highestFloor,
-    images, 
+    images,
   ) => {
     try {
 
@@ -36,7 +37,7 @@ class EstateService {
       // options가 배열에 담겨져 오기 때문에
 
       //이미지 업로드
-      console.log('images check' , userId,images);
+      console.log('images check', userId, images);
       const url = await uploadImageToS3(images);
 
       const estate = await this.estateRepository.setEstate(
@@ -50,6 +51,7 @@ class EstateService {
         price,
         maintenanceCost,
         moveInDate,
+        moveInDateInput,
         supplyArea,
         exclusiveArea,
         numOfRoom,
@@ -62,7 +64,7 @@ class EstateService {
         options,
         detail,
         lowestFloor,
-        highestFloor, 
+        highestFloor,
       );
 
 

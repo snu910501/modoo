@@ -13,6 +13,7 @@ class EstateRepository {
     price,
     maintenanceCost,
     moveInDate,
+    moveInDateInput,
     supplyArea,
     exclusiveArea,
     numOfRoom,
@@ -25,7 +26,7 @@ class EstateRepository {
     options,
     detail,
     lowestFloor,
-    highestFloor, 
+    highestFloor,
     url
   ) => {
     try {
@@ -41,6 +42,7 @@ class EstateRepository {
         price,
         maintenanceCost,
         moveInDate,
+        moveInDateInput,
         supplyArea,
         exclusiveArea,
         numOfRoom,
@@ -52,7 +54,7 @@ class EstateRepository {
         pet,
         options,
         lowestFloor,
-        highestFloor, 
+        highestFloor,
         detail,
       });
 
