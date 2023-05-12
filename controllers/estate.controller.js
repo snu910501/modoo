@@ -80,6 +80,17 @@ class EstateController {
     } catch (err) {
       next(err);
     }
+  };
+
+  getEstate = async (req, res, next) => {
+    try {
+      const { estateId } = req.body;
+
+      const estate = await this.estateService.getEstate(estateId);
+      return res.status(200).json({ estate: estate })
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

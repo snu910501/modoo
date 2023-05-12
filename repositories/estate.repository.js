@@ -101,18 +101,57 @@ class EstateRepository {
           "numOfBath",
           "estateId",
         ],
+        raw: true
       });
 
-      // const imgUrl = []
-      // const imgList = estateList.map(async(list) => {
-      //   const url = await PropertyImg.findOne()
-      // })
+      const images = await Promise.all(
+        estateList.map(async (list) => {
+          const propertyImages = await PropertyImg.findAll({
+            where: {
+              estateId: list.estateId
+            },
+            raw: true, // raw 옵션을 추가해 raw data로 조회
+            attributes: {
+              exclude: ['_previousDataValues'] // _previousDataValues 제외
+            }
+          });
+          list.imgs = propertyImages;
+          return propertyImages;
+        })
+      );
+
 
       return estateList
     } catch (err) {
       throw err;
     }
   };
+
+  getEstate = async (estateId) => {
+    try {
+
+      const estate = await Estate.findOne({
+        where: {
+          estateId: estateId
+        },
+        raw: true,
+      });
+
+      const img = await PropertyImg.findAll({
+        where: {
+          estateId: estateId,
+        },
+        raw: true
+      });
+      console.log('estate', estate, img)
+      estate.imgs = img;
+      console.log(estate);
+
+      return estate;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = EstateRepository;

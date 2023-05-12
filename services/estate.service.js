@@ -82,7 +82,16 @@ class EstateService {
     } catch (err) {
       throw err;
     }
-  }
+  };
+
+  getEstate = async (estateId) => {
+    try {
+      const estate = await this.estateRepository.getEstate(estateId);
+      return estate;
+    } catch (err) {
+      throw err;
+    }
+  };
 
 }
 

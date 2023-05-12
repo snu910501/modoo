@@ -22,6 +22,7 @@ const upload = multer({
 });
 
 router.post('/', isLoggedIn, upload.array('images', 8), estateController.setEstate);
+router.get('/', isLoggedIn, estateController.getEstate);
 router.get('/list', isLoggedIn, estateController.getEstateList);
 
 module.exports = router;
