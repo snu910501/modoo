@@ -84,7 +84,7 @@ class EstateController {
 
   getEstate = async (req, res, next) => {
     try {
-      const { estateId } = req.body;
+      const { estateId } = req.params;
 
       const estate = await this.estateService.getEstate(estateId);
       return res.status(200).json({ estate: estate })
