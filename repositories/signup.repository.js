@@ -18,7 +18,6 @@ class SignUpRepository {
         userEmail,
         userPhoneNumber,
         userKey,
-        approved : approved,
       });
 
       return user;

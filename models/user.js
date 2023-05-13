@@ -53,6 +53,11 @@ module.exports = class User extends Sequelize.Model {
         type : Sequelize.BOOLEAN,
         allowNull : false,
         defaultValue : false,
+      },
+      admin : {
+        type: Sequelize.BOOLEAN,
+        allowNull : false,
+        defaultValue : false,
       }
 
     },

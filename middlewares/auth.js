@@ -36,4 +36,18 @@ const isApproved = async (req, res, next) => {
   }
 };
 
-module.exports = { isLoggedIn, isApproved };
+const isAdmin = async(req,res,next) => {
+  try{
+    const {admin} = req.headers;
+
+    if(admin == 'true') {
+      next();
+    } else {
+      throw new Error(501, '관리자가 아닙니다');
+    }
+  } catch(err){
+    next(err);
+  }
+}
+
+module.exports = { isLoggedIn, isApproved, isAdmin };

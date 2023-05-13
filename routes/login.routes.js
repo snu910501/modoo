@@ -34,7 +34,7 @@ router.post('/', upload.array('images', 1), (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: info.message })
     }
-    const token = jwt.sign({ userId: user.userId, approved : user.approved }, process.env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.userId, approved : user.approved, admin : user.admin }, process.env.JWT_SECRET)
     return res.status(200).json({ token: token, userKey : user.userKey })
   })(req, res, next);
 });
