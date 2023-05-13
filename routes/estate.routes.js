@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { isLoggedIn } = require("../middlewares/auth");
+const { isLoggedIn, isApproved } = require("../middlewares/auth");
 
 const EstateController = require('../controllers/estate.controller');
 const estateController = new EstateController();
@@ -21,9 +21,9 @@ const upload = multer({
   },
 });
 
-router.post('/', isLoggedIn, upload.array('images', 8), estateController.setEstate);
-router.get('/list', isLoggedIn, estateController.getEstateList);
-router.delete("/:estateId", isLoggedIn, estateController.deleteEstate);
-router.get('/:estateId', isLoggedIn, estateController.getEstate);
+router.post('/',isApproved ,isLoggedIn, upload.array('images', 8), estateController.setEstate);
+router.get('/list',isApproved ,isLoggedIn, estateController.getEstateList);
+router.delete("/:estateId", isApproved,isLoggedIn, estateController.deleteEstate);
+router.get('/:estateId', isApproved,isLoggedIn, estateController.getEstate);
 
 module.exports = router;
