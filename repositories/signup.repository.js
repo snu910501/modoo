@@ -10,18 +10,20 @@ class SignUpRepository {
     userKey
   ) => {
     try {
+      const approved = false;
       const user = await User.create({
         userId,
         userPassword,
         userName,
         userEmail,
         userPhoneNumber,
-        userKey
+        userKey,
+        approved : approved,
       });
 
       return user;
     } catch (err) {
-      throw err;
+      throw err;s
     }
   };
 

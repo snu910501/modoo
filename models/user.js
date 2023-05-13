@@ -48,6 +48,11 @@ module.exports = class User extends Sequelize.Model {
       userCompanyTelNumber: {
         type: Sequelize.STRING,
         allowNull: true,
+      },
+      approved: {
+        type : Sequelize.BOOLEAN,
+        allowNull : false,
+        defaultValue : false,
       }
 
     },

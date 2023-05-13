@@ -101,27 +101,26 @@ class EstateRepository {
           "numOfBath",
           "estateId",
         ],
-        raw: true
+        raw: true,
       });
 
       const images = await Promise.all(
         estateList.map(async (list) => {
           const propertyImages = await PropertyImg.findAll({
             where: {
-              estateId: list.estateId
+              estateId: list.estateId,
             },
             raw: true, // raw 옵션을 추가해 raw data로 조회
             attributes: {
-              exclude: ['_previousDataValues'] // _previousDataValues 제외
-            }
+              exclude: ["_previousDataValues"], // _previousDataValues 제외
+            },
           });
           list.imgs = propertyImages;
           return propertyImages;
         })
       );
 
-
-      return estateList
+      return estateList;
     } catch (err) {
       throw err;
     }
@@ -129,10 +128,9 @@ class EstateRepository {
 
   getEstate = async (estateId) => {
     try {
-
       const estate = await Estate.findOne({
         where: {
-          estateId: estateId
+          estateId: estateId,
         },
         raw: true,
       });
@@ -141,9 +139,9 @@ class EstateRepository {
         where: {
           estateId: estateId,
         },
-        raw: true
+        raw: true,
       });
-      console.log('estate', estate, img)
+      console.log("estate", estate, img);
       estate.imgs = img;
       console.log(estate);
 
@@ -151,7 +149,20 @@ class EstateRepository {
     } catch (err) {
       throw err;
     }
-  }
+  };
+
+  deleteEstate = async (estateId) => {
+    try {
+      await Estate.destroy({
+        where : {
+          estateId : estateId,
+        }
+      })
+      return;
+    } catch (err) {
+      throw err;
+    }
+  };
 }
 
 module.exports = EstateRepository;

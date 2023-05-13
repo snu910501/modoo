@@ -93,6 +93,15 @@ class EstateService {
     }
   };
 
+  deleteEstate = async(estateId) => {
+    try {
+      await this.estateRepository.deleteEstate(estateId);
+      return ;
+    } catch(err){
+      throw err;
+    }
+  }
+
 }
 
 module.exports = EstateService;
