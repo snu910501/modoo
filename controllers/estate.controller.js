@@ -103,6 +103,17 @@ class EstateController {
       next(err);
     }
   };
+
+  getUserEstate = async(req,res,next) => {
+    try{
+      const {userId} = req.params;
+
+      const estates = await this.estateService.getUserEstate(userId);
+      return res.status(200).json({estates : estates });
+    } catch(err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = EstateController;

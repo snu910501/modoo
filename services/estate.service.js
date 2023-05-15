@@ -100,6 +100,15 @@ class EstateService {
     } catch(err){
       throw err;
     }
+  };
+
+  getUserEstate = async(userId) => {
+    try{
+      const estates = await this.estateRepository.getUserEstate(userId) ;
+      return estates;
+    } catch(err) {
+      throw err;
+    }
   }
 
 }

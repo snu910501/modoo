@@ -163,6 +163,21 @@ class EstateRepository {
       throw err;
     }
   };
+
+  getUserEstate = async(userId) => {
+    try{
+      const estates = await Estate.findAll({
+        where : {
+          userId : userId
+        },
+        raw : true,
+      })
+
+      return estates;
+    }catch(err) {
+
+    }
+  }
 }
 
 module.exports = EstateRepository;
