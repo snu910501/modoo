@@ -26,7 +26,7 @@ const isApproved = async (req, res, next) => {
   try {
     const { approved } = req.headers;
 
-    if (approved == 'true') {
+    if (approved == '1') {
       next();
     } else {
       throw new Error(501, "승인되지 않은 회원입니다.");
