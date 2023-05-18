@@ -69,6 +69,73 @@ class EstateController {
     }
   };
 
+  putEstate = async (req, res, next) => {
+    try {
+      const {
+        estateId,
+        typeOfProperty,
+        addressOfProperty,
+        dong,
+        transactionType,
+        deposit,
+        monthly,
+        price,
+        maintenanceCost,
+        moveInDate,
+        moveInDateInput,
+        supplyArea,
+        exclusiveArea,
+        numOfRoom,
+        numOfBath,
+        numOfFloor,
+        floor,
+        parking,
+        elevator,
+        pet,
+        options,
+        detail,
+        lowestFloor,
+        highestFloor,
+      } = req.body;
+
+      const images = req.files;
+      const userId = res.locals.userId;
+
+      await this.estateService.putEstate(
+        estateId,
+        userId,
+        typeOfProperty,
+        addressOfProperty,
+        dong,
+        transactionType,
+        deposit,
+        monthly,
+        price,
+        maintenanceCost,
+        moveInDate,
+        moveInDateInput,
+        supplyArea,
+        exclusiveArea,
+        numOfRoom,
+        numOfBath,
+        numOfFloor,
+        floor,
+        parking,
+        elevator,
+        pet,
+        options,
+        detail,
+        lowestFloor,
+        highestFloor,
+        images
+      );
+
+      return res.status(200).json({message : '매물 수정이 완료되었습니다.'})
+    } catch (err) {
+      next(err);
+    }
+  };
+
   getEstateList = async (req, res, next) => {
     try {
       const userId = res.locals.userId;
@@ -95,25 +162,25 @@ class EstateController {
 
   deleteEstate = async (req, res, next) => {
     try {
-      const {estateId} = req.params;
+      const { estateId } = req.params;
 
       await this.estateService.deleteEstate(estateId);
-      return res.status(200).json({message : '매물을 삭제하였습니다.'})
+      return res.status(200).json({ message: "매물을 삭제하였습니다." });
     } catch (err) {
       next(err);
     }
   };
 
-  getUserEstate = async(req,res,next) => {
-    try{
-      const {userId} = req.params;
+  getUserEstate = async (req, res, next) => {
+    try {
+      const { userId } = req.params;
 
       const estates = await this.estateService.getUserEstate(userId);
-      return res.status(200).json({estates : estates });
-    } catch(err) {
+      return res.status(200).json({ estates: estates });
+    } catch (err) {
       next(err);
     }
-  }
+  };
 }
 
 module.exports = EstateController;

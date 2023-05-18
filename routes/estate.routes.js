@@ -21,7 +21,14 @@ const upload = multer({
   },
 });
 
-router.post('/',isApproved ,isLoggedIn, upload.array('images', 8), estateController.setEstate);
+router.put(
+  "/",
+  isApproved,
+  isLoggedIn,
+  upload.array("images", 10),
+  estateController.putEstate
+);
+router.post('/',isApproved ,isLoggedIn, upload.array('images', 10), estateController.setEstate);
 router.get('/list',isApproved ,isLoggedIn, estateController.getEstateList);
 router.get('/map/:userId', estateController.getUserEstate);
 router.delete("/:estateId", isApproved,isLoggedIn, estateController.deleteEstate);

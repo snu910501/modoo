@@ -1,5 +1,6 @@
-const EstateRepository = require('../repositories/estate.repository');
-const uploadImageToS3 = require('../modules/uploadImageToS3');
+const EstateRepository = require("../repositories/estate.repository");
+const uploadImageToS3 = require("../modules/uploadImageToS3");
+const deleteImageFromS3 = require('../modules/deleteImageFromS3');
 
 class EstateService {
   estateRepository = new EstateRepository();
@@ -29,10 +30,9 @@ class EstateService {
     detail,
     lowestFloor,
     highestFloor,
-    images,
+    images
   ) => {
     try {
-
       //각 항목별로 유효성 검사를 실시해야함
       // options가 배열에 담겨져 오기 때문에
 
@@ -60,15 +60,84 @@ class EstateService {
         options,
         detail,
         lowestFloor,
-        highestFloor,
+        highestFloor
       );
 
       //이미지 업로드
       const url = await uploadImageToS3(estate.estateId, images);
-      await this.estateRepository.setPropertyImg(estate.estateId, url)
-
+      await this.estateRepository.setPropertyImg(estate.estateId, url);
 
       return;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  putEstate = async (
+    estateId,
+    userId,
+    typeOfProperty,
+    addressOfProperty,
+    dong,
+    transactionType,
+    deposit,
+    monthly,
+    price,
+    maintenanceCost,
+    moveInDate,
+    moveInDateInput,
+    supplyArea,
+    exclusiveArea,
+    numOfRoom,
+    numOfBath,
+    numOfFloor,
+    floor,
+    parking,
+    elevator,
+    pet,
+    options,
+    detail,
+    lowestFloor,
+    highestFloor,
+    images
+  ) => {
+    try {
+      const estate = await this.estateRepository.putEstate(
+        estateId,
+        userId,
+        typeOfProperty,
+        addressOfProperty,
+        dong,
+        transactionType,
+        deposit,
+        monthly,
+        price,
+        maintenanceCost,
+        moveInDate,
+        moveInDateInput,
+        supplyArea,
+        exclusiveArea,
+        numOfRoom,
+        numOfBath,
+        numOfFloor,
+        floor,
+        parking,
+        elevator,
+        pet,
+        options,
+        detail,
+        lowestFloor,
+        highestFloor
+      );
+
+      // S3에서 이미지 삭제하고 다시 저장
+      await deleteImageFromS3(estateId);
+      const url = await uploadImageToS3(estateId, images);
+
+      // DB의 이미지 파일들 경로 다시 설정해야함.
+      await this.estateRepository.deletePropertyImg(estateId);
+      await this.estateRepository.setPropertyImg(estateId, url);
+      // await this.estateRepository.setPropertyImg(estate.estateId, url);
     } catch (err) {
       throw err;
     }
@@ -93,24 +162,23 @@ class EstateService {
     }
   };
 
-  deleteEstate = async(estateId) => {
+  deleteEstate = async (estateId) => {
     try {
       await this.estateRepository.deleteEstate(estateId);
-      return ;
-    } catch(err){
+      return;
+    } catch (err) {
       throw err;
     }
   };
 
-  getUserEstate = async(userId) => {
-    try{
-      const estates = await this.estateRepository.getUserEstate(userId) ;
+  getUserEstate = async (userId) => {
+    try {
+      const estates = await this.estateRepository.getUserEstate(userId);
       return estates;
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
-  }
-
+  };
 }
 
 module.exports = EstateService;

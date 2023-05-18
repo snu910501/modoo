@@ -5,7 +5,7 @@ const fs = require("fs");
 require("dotenv").config();
 
 module.exports = uploadImageToS3 = async (estateId, images) => {
-  console.log('imgaes', 'haha;', images);
+  
   let url = [];
   const s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY,

@@ -1,5 +1,6 @@
 const Estate = require("../models/estate");
 const PropertyImg = require("../models/propertyImg");
+const Error = require('../modules/errorHandler');
 
 class EstateRepository {
   setEstate = async (
@@ -64,6 +65,78 @@ class EstateRepository {
     }
   };
 
+  putEstate = async (
+    estateId,
+    userId,
+    typeOfProperty,
+    addressOfProperty,
+    dong,
+    transactionType,
+    deposit,
+    monthly,
+    price,
+    maintenanceCost,
+    moveInDate,
+    moveInDateInput,
+    supplyArea,
+    exclusiveArea,
+    numOfRoom,
+    numOfBath,
+    numOfFloor,
+    floor,
+    parking,
+    elevator,
+    pet,
+    options,
+    detail,
+    lowestFloor,
+    highestFloor
+  ) => {
+    try {
+      const getEstate = await Estate.findOne({
+        where : {estateId : estateId}
+      });
+
+      if(!getEstate) {
+        throw new Error(501, '존재하지 않는 매물입니다');
+      };
+
+      const estate = await Estate.update(
+        {
+          userId,
+          typeOfProperty,
+          addressOfProperty,
+          dong,
+          transactionType,
+          deposit,
+          monthly,
+          price,
+          maintenanceCost,
+          moveInDate,
+          moveInDateInput,
+          supplyArea,
+          exclusiveArea,
+          numOfRoom,
+          numOfBath,
+          numOfFloor,
+          floor,
+          parking,
+          elevator,
+          pet,
+          options,
+          lowestFloor,
+          highestFloor,
+          detail,
+        },
+        { where: { estateId: getEstate.estateId } }
+      );
+
+      return estate;
+    } catch (err) {
+      throw err;
+    }
+  };
+
   setPropertyImg = async (estateId, urls) => {
     try {
       let num = 1;
@@ -81,6 +154,18 @@ class EstateRepository {
       throw err;
     }
   };
+
+  deletePropertyImg = async(estateId) => {
+    try{
+      await PropertyImg.destroy({
+        where : {estateId}
+      })
+      console.log('이미지 삭제 성공');
+      return;
+    }catch(err) {
+      throw err;
+    }
+  }
 
   getEstateList = async (userId) => {
     try {
@@ -154,30 +239,28 @@ class EstateRepository {
   deleteEstate = async (estateId) => {
     try {
       await Estate.destroy({
-        where : {
-          estateId : estateId,
-        }
-      })
+        where: {
+          estateId: estateId,
+        },
+      });
       return;
     } catch (err) {
       throw err;
     }
   };
 
-  getUserEstate = async(userId) => {
-    try{
+  getUserEstate = async (userId) => {
+    try {
       const estates = await Estate.findAll({
-        where : {
-          userId : userId
+        where: {
+          userId: userId,
         },
-        raw : true,
-      })
+        raw: true,
+      });
 
       return estates;
-    }catch(err) {
-
-    }
-  }
+    } catch (err) {}
+  };
 }
 
 module.exports = EstateRepository;
