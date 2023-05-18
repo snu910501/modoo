@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-module.exports = addressToGet = async (address) => {
+module.exports = addressToGeo = async (address) => {
   const response = await axios.get(
     "https://dapi.kakao.com/v2/local/search/address.json",
     {
@@ -14,7 +14,7 @@ module.exports = addressToGet = async (address) => {
   );
 
   return {
-    lat: response.data.documents[0].y,
-    lng: response.data.documents[0].x,
+    lat: response.data.documents[0].x,
+    lng: response.data.documents[0].y,
   };
 };

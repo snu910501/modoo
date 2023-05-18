@@ -1,5 +1,6 @@
 const Estate = require("../models/estate");
 const PropertyImg = require("../models/propertyImg");
+const PropertyOfDefault = require('../models/propertyOfDefault');
 const Error = require('../modules/errorHandler');
 
 class EstateRepository {
@@ -28,7 +29,8 @@ class EstateRepository {
     detail,
     lowestFloor,
     highestFloor,
-    url
+    lat,
+    lng
   ) => {
     try {
       // 매물사진과 정보를 따로 저장해야함.
@@ -57,7 +59,16 @@ class EstateRepository {
         lowestFloor,
         highestFloor,
         detail,
+        lat,
+        lng
       });
+
+      await PropertyOfDefault.create({
+        userId,
+        estateId : estate.estateId,
+        lat,
+        lng
+      })
 
       return estate;
     } catch (err) {

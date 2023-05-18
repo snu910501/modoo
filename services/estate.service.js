@@ -1,6 +1,7 @@
 const EstateRepository = require("../repositories/estate.repository");
 const uploadImageToS3 = require("../modules/uploadImageToS3");
 const deleteImageFromS3 = require('../modules/deleteImageFromS3');
+const addressToGeo = require('../modules/addressToGeo');
 
 class EstateService {
   estateRepository = new EstateRepository();
@@ -34,6 +35,11 @@ class EstateService {
   ) => {
     try {
       //각 항목별로 유효성 검사를 실시해야함
+
+      //주소를 위 경도 값으로 변경해야함
+
+      const latLng = addressToGeo(addressOfProperty);
+
       // options가 배열에 담겨져 오기 때문에
 
       const estate = await this.estateRepository.setEstate(
@@ -60,7 +66,9 @@ class EstateService {
         options,
         detail,
         lowestFloor,
-        highestFloor
+        highestFloor,
+        lat = latLng.lat,
+        lng = latLng.lng
       );
 
       //이미지 업로드
