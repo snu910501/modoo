@@ -1,4 +1,11 @@
-const uuid = require('uuid');
+const init = () => {
+  const userId = 'snu910501';
+  const adminList = ["snu910501", "dlzmfflqtm1234"];
 
-const userKey = uuid.v4();
-console.log(userKey);
+  for(let index of adminList){
+    console.log(index);
+  }
+  console.log('hi')
+}
+
+init();

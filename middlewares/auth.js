@@ -26,7 +26,7 @@ const isApproved = async (req, res, next) => {
   try {
     const { approved } = req.headers;
     console.log(typeof approved, approved);
-    if (approved == 'true') {
+    if (approved == "true") {
       next();
     } else {
       throw new Error(501, "승인되지 않은 회원입니다.");
@@ -36,18 +36,29 @@ const isApproved = async (req, res, next) => {
   }
 };
 
-const isAdmin = async(req,res,next) => {
-  try{
-    const {admin} = req.headers;
+const isAdmin = async (req, res, next) => {
+  try {
+    const { admin, userid } = req.headers;
+    const adminList = ["snu910501", "dlzmfflqtm1234"];
 
-    if(admin == 'true') {
+    function checkAdmin(arr, userId) {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == userId) {
+          return;
+        }
+      }
+      throw new Error(501, "관리자가 아닙니다");
+    }
+
+    if (admin == "true") {
+      checkAdmin(adminList, userid);
       next();
     } else {
-      throw new Error(501, '관리자가 아닙니다');
+      throw new Error(501, "관리자가 아닙니다");
     }
-  } catch(err){
+  } catch (err) {
     next(err);
   }
-}
+};
 
 module.exports = { isLoggedIn, isApproved, isAdmin };
