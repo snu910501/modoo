@@ -2,6 +2,16 @@ const User = require("../models/user");
 const Error = require("../modules/errorHandler");
 
 class userRepository {
+
+  getUserList = async() => {
+    try{
+      const userList = await User.findAll({});
+      return userList;
+    }catch(err) {
+      throw err;
+    }
+  }
+
   approved = async (userId) => {
     try {
       const user = await User.findOne({
