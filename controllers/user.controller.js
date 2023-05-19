@@ -9,7 +9,7 @@ class UserController {
       return res.status(200).json({userList : userList});
     } catch(err) {
       next(err);
-    }
+    };
   };
 
   approved = async(req,res,next) => {
@@ -20,7 +20,7 @@ class UserController {
       return res.status(200).json({message : '회원 승인정보가 변경되었습니다.'})
     } catch(err) {
       next(err);
-    }
+    };
   };
 
 }
