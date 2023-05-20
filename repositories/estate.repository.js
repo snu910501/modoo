@@ -1,13 +1,14 @@
 const Estate = require("../models/estate");
 const PropertyImg = require("../models/propertyImg");
-const PropertyOfDefault = require('../models/propertyOfDefault');
-const Error = require('../modules/errorHandler');
+const PropertyOfDong = require("../models/propertyOfDong");
+const Error = require("../modules/errorHandler");
 
 class EstateRepository {
   setEstate = async (
     userId,
     typeOfProperty,
     addressOfProperty,
+    addressOfJibun,
     dong,
     transactionType,
     deposit,
@@ -38,6 +39,7 @@ class EstateRepository {
         userId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,
@@ -60,17 +62,51 @@ class EstateRepository {
         highestFloor,
         detail,
         lat,
-        lng
+        lng,
       });
 
-      await PropertyOfDefault.create({
-        userId,
-        estateId : estate.estateId,
-        lat,
-        lng
-      })
+      // await PropertyOfDefault.create({
+      //   userId,
+      //   estateId : estate.estateId,
+      //   lat,
+      //   lng
+      // })
 
       return estate;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  clusterByDong = async (dong, dongLatLng) => {
+    try {
+      const dongExist = await PropertyOfDong.findOne({
+        where: {
+          nameOfDong: dong,
+        },
+      });
+      
+      if (dongExist) {
+        let number = parseInt(dongExist.numOfDong);
+        console.log("성공1");
+        await PropertyOfDong.update(
+          {
+            numOfDong: number+1,
+          },
+          { where: { nameOfDong: dong } }
+        );
+
+        return;
+      } else {
+        console.log("성공2");
+        await PropertyOfDong.create({
+          nameOfDong: dong,
+          numOfDong: 0,
+          lat: dongLatLng.lat,
+          lng: dongLatLng.lng,
+        });
+        return ;
+      }
     } catch (err) {
       throw err;
     }
@@ -81,6 +117,7 @@ class EstateRepository {
     userId,
     typeOfProperty,
     addressOfProperty,
+    addressOfJibun,
     dong,
     transactionType,
     deposit,
@@ -105,18 +142,19 @@ class EstateRepository {
   ) => {
     try {
       const getEstate = await Estate.findOne({
-        where : {estateId : estateId}
+        where: { estateId: estateId },
       });
 
-      if(!getEstate) {
-        throw new Error(501, '존재하지 않는 매물입니다');
-      };
+      if (!getEstate) {
+        throw new Error(501, "존재하지 않는 매물입니다");
+      }
 
       const estate = await Estate.update(
         {
           userId,
           typeOfProperty,
           addressOfProperty,
+          addressOfJibun,
           dong,
           transactionType,
           deposit,
@@ -166,17 +204,17 @@ class EstateRepository {
     }
   };
 
-  deletePropertyImg = async(estateId) => {
-    try{
+  deletePropertyImg = async (estateId) => {
+    try {
       await PropertyImg.destroy({
-        where : {estateId}
-      })
-      console.log('이미지 삭제 성공');
+        where: { estateId },
+      });
+      console.log("이미지 삭제 성공");
       return;
-    }catch(err) {
+    } catch (err) {
       throw err;
     }
-  }
+  };
 
   getEstateList = async (userId) => {
     try {

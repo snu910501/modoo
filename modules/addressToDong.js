@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-const init = async (address) => {
-  const dong = address.split(" ").join(" ");
+module.exports = addressToDong = async (address) => {
+  const dong = address.split(' ').join(' ');
   const response = await axios.get(
     "https://dapi.kakao.com/v2/local/search/address.json",
     {
@@ -13,11 +13,9 @@ const init = async (address) => {
       }),
     }
   );
-    console.log(response.data.documents[0].x, response.data.documents[0].y)
+
   return {
     lat: response.data.documents[0].x,
     lng: response.data.documents[0].y,
   };
 };
-
-init("경기 안성시 공도읍");

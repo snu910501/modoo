@@ -6,16 +6,22 @@ class MapController {
   getMap = async(req,res,next) => {
     try{
       const {userId} = req.params;
-      const { swLatLng, neLatLng, zoomLevel } = req.body;
 
-      console.log(userId, swLatLng, neLatLng, zoomLevel)
+      const { swLat, swLng, neLat, neLng, zoomLevel } = req.body;
 
-      const mapList = await this.mapService.getMap(userId, swLatLng, neLatLng, zoomLevel);
+      const mapList = await this.mapService.getMap(
+        userId,
+        swLat,
+        swLng,
+        neLat,
+        neLng,
+        zoomLevel
+      );
       return res.status(200).json({mapList})
     } catch(err) {
       next(err);
     }
   };
-}
+};
 
 module.exports = MapController;

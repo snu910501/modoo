@@ -2,17 +2,17 @@ const Estate = require("../models/estate");
 const { Op } = require("sequelize");
 
 class MapRepository {
-  getMap = async (userId, swLatLng, neLatLng, zoomLevel) => {
+  getMap = async (userId, swLat, swLng, neLat, neLng, zoomLevel) => {
     try {
       if (zoomLevel < 4) {
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
             lat: {
-              [Op.between]: [swLatLng.lat, neLatLng.lat],
+              [Op.between]: [swLat, neLat],
             },
             lng: {
-              [Op.between]: [swLatLng.lng, neLatLng.lng],
+              [Op.between]: [swLng, neLng],
             },
           },
           raw: true,
@@ -20,15 +20,14 @@ class MapRepository {
             [Op.not]: "options",
           },
         });
-
+        console.log("mapList", mapList);
         return mapList;
       } else {
-
       }
     } catch (err) {
       throw err;
     }
   };
-}
+};
 
 module.exports = MapRepository;

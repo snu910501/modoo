@@ -8,6 +8,7 @@ class EstateController {
       const {
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,
@@ -34,12 +35,13 @@ class EstateController {
       const images = req.files;
       const userId = res.locals.userId;
 
-      console.log("images controller", images);
+      console.log("images controller", addressOfJibun);
 
       await this.estateService.setEstate(
         userId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,
@@ -75,6 +77,7 @@ class EstateController {
         estateId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,
@@ -106,6 +109,7 @@ class EstateController {
         userId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,

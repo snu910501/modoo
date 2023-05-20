@@ -2,6 +2,8 @@ const EstateRepository = require("../repositories/estate.repository");
 const uploadImageToS3 = require("../modules/uploadImageToS3");
 const deleteImageFromS3 = require('../modules/deleteImageFromS3');
 const addressToGeo = require('../modules/addressToGeo');
+const addressToDong= require('../modules/addressToDong');
+const clusterByDong = require('../modules/clusterByDong');
 
 class EstateService {
   estateRepository = new EstateRepository();
@@ -10,6 +12,7 @@ class EstateService {
     userId,
     typeOfProperty,
     addressOfProperty,
+    addressOfJibun,
     dong,
     transactionType,
     deposit,
@@ -35,17 +38,25 @@ class EstateService {
   ) => {
     try {
       //각 항목별로 유효성 검사를 실시해야함
+      // options가 배열에 담겨져 오기 때문에
 
       //주소를 위 경도 값으로 변경해야함
 
-      const latLng = addressToGeo(addressOfProperty);
+      const { lat, lng } = await addressToGeo(addressOfProperty);
 
-      // options가 배열에 담겨져 오기 때문에
+      //주소를 동 단위로 클러스터링 해야한다.
+      console.log('pp', addressOfJibun);
+      const dong = await clusterByDong(addressOfJibun);
+      const dongLatLng = await addressToDong(addressOfJibun);
+      this.estateRepository.clusterByDong(dong, dongLatLng);
+
+      // 매물 저장을 한다.
 
       const estate = await this.estateRepository.setEstate(
         userId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,
@@ -67,8 +78,8 @@ class EstateService {
         detail,
         lowestFloor,
         highestFloor,
-        lat = latLng.lat,
-        lng = latLng.lng
+        lat,
+        lng
       );
 
       //이미지 업로드
@@ -86,6 +97,7 @@ class EstateService {
     userId,
     typeOfProperty,
     addressOfProperty,
+    addressOfJibun,
     dong,
     transactionType,
     deposit,
@@ -115,6 +127,7 @@ class EstateService {
         userId,
         typeOfProperty,
         addressOfProperty,
+        addressOfJibun,
         dong,
         transactionType,
         deposit,

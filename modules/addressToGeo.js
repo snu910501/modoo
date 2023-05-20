@@ -12,7 +12,7 @@ module.exports = addressToGeo = async (address) => {
       }),
     }
   );
-
+  console.log('zz',response.data.documents);
   return {
     lat: response.data.documents[0].x,
     lng: response.data.documents[0].y,

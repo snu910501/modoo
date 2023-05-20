@@ -1,14 +1,14 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
-module.exports = class PropertyOfDefault extends Sequelize.Model {
+module.exports = class PropertyOfDong extends Sequelize.Model{
   static init(sequelize) {
     return super.init(
       {
-        estateId: {
+        nameOfDong: {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        userId: {
+        numOfDong: {
           type: Sequelize.STRING,
           allowNull: false,
         },
@@ -17,19 +17,19 @@ module.exports = class PropertyOfDefault extends Sequelize.Model {
           allowNull: false,
         },
         lng: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING,
           allowNull: false,
         },
       },
       {
         sequelize,
         timestamps: false,
-        modelName: "PropertyOfDefault",
-        tableName: "propertyOfDefaults",
+        modelName: "PropertyOfDong",
+        tableName: "propertyOfDongs",
         paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
       }
     );
   }
-};
+}
