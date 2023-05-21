@@ -2,7 +2,7 @@ const EstateRepository = require("../repositories/estate.repository");
 const uploadImageToS3 = require("../modules/uploadImageToS3");
 const deleteImageFromS3 = require('../modules/deleteImageFromS3');
 const addressToGeo = require('../modules/addressToGeo');
-const addressToDong= require('../modules/addressToDong');
+const addressToDong = require('../modules/addressToDong');
 const clusterByDong = require('../modules/clusterByDong');
 
 class EstateService {
@@ -48,7 +48,7 @@ class EstateService {
       console.log('pp', addressOfJibun);
       const dong = await clusterByDong(addressOfJibun);
       const dongLatLng = await addressToDong(addressOfJibun);
-      this.estateRepository.clusterByDong(dong, dongLatLng);
+      this.estateRepository.clusterByDong(userId, dong, dongLatLng);
 
       // 매물 저장을 한다.
 
