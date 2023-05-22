@@ -21,3 +21,4 @@ const init = async (address) => {
 };
 
 init("경기 안성시 공도읍");
+

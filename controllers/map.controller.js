@@ -7,7 +7,11 @@ class MapController {
     try{
       const {userId} = req.params;
 
-      const { swLat, swLng, neLat, neLng, zoomLevel } = req.body;
+      const { swLatLng, neLatLng, zoomLevel } = req.body;
+      const swLat = swLatLng.lat;
+      const swLng = swLatLng.lng;
+      const neLat = neLatLng.lat;
+      const neLng = neLatLng.lng;
 
       const mapList = await this.mapService.getMap(
         userId,
