@@ -8,6 +8,8 @@ class MapController {
       const {userId} = req.params;
 
       const { swLatLng, neLatLng, zoomLevel } = req.body;
+      console.log('zz', swLatLng,neLatLng);
+      console.log('gg', typeof swLatLng);
       const swLat = swLatLng.lat;
       const swLng = swLatLng.lng;
       const neLat = neLatLng.lat;
