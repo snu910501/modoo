@@ -1,9 +1,13 @@
 const Sequelize = require('sequelize');
 
-module.exports = class PropertyOfDong extends Sequelize.Model{
+module.exports = class PropertyOfDong extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        userId: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         nameOfDong: {
           type: Sequelize.STRING,
           allowNull: false,

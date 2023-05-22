@@ -78,34 +78,35 @@ class EstateRepository {
     }
   };
 
-  clusterByDong = async (dong, dongLatLng) => {
+  clusterByDong = async (userId, dong, dongLatLng) => {
     try {
       const dongExist = await PropertyOfDong.findOne({
         where: {
           nameOfDong: dong,
+          userId: userId,
         },
       });
-      
+
       if (dongExist) {
         let number = parseInt(dongExist.numOfDong);
-        console.log("성공1");
+
         await PropertyOfDong.update(
           {
-            numOfDong: number+1,
+            numOfDong: number + 1,
           },
           { where: { nameOfDong: dong } }
         );
 
         return;
       } else {
-        console.log("성공2");
         await PropertyOfDong.create({
+          userId: userId,
           nameOfDong: dong,
           numOfDong: 0,
           lat: dongLatLng.lat,
           lng: dongLatLng.lng,
         });
-        return ;
+        return;
       }
     } catch (err) {
       throw err;
@@ -308,7 +309,7 @@ class EstateRepository {
       });
 
       return estates;
-    } catch (err) {}
+    } catch (err) { }
   };
 }
 
