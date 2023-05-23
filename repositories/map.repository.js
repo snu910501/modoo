@@ -21,6 +21,7 @@ class MapRepository {
             [Op.not]: "options",
           },
         });
+        console.log('mapList', mapList);
         return mapList;
       } else {
         const mapList = await Estate.findAll({
@@ -42,6 +43,7 @@ class MapRepository {
           where: { userId: userId },
           raw: true,
         })
+        console.log('mapList', mapList, dongList);
         return { mapList, dongList };
       }
     } catch (err) {
