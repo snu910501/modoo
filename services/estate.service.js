@@ -52,6 +52,8 @@ class EstateService {
 
       // 매물 저장을 한다.
 
+
+
       const estate = await this.estateRepository.setEstate(
         userId,
         typeOfProperty,

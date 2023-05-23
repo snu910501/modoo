@@ -35,6 +35,7 @@ class EstateRepository {
   ) => {
     try {
       // 매물사진과 정보를 따로 저장해야함.
+      console.log('지번주소zz', addressOfJibun);
       const estate = await Estate.create({
         userId,
         typeOfProperty,
@@ -64,13 +65,6 @@ class EstateRepository {
         lat,
         lng,
       });
-
-      // await PropertyOfDefault.create({
-      //   userId,
-      //   estateId : estate.estateId,
-      //   lat,
-      //   lng
-      // })
 
       return estate;
     } catch (err) {

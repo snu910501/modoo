@@ -13,9 +13,10 @@ module.exports = addressToDong = async (address) => {
       }),
     }
   );
+  console.log(response.data.documents);
 
   return {
-    lat: response.data.documents[0].x,
-    lng: response.data.documents[0].y,
+    lat: response.data.documents[0].y,
+    lng: response.data.documents[0].x,
   };
 };

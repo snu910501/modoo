@@ -22,6 +22,10 @@ module.exports = class Estate extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        addressOfJibun: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         dong: {
           type: Sequelize.STRING,
           allowNull: true,
