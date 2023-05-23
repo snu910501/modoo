@@ -96,7 +96,7 @@ class EstateRepository {
         await PropertyOfDong.create({
           userId: userId,
           nameOfDong: dong,
-          numOfDong: 0,
+          numOfDong: 1,
           lat: dongLatLng.lat,
           lng: dongLatLng.lng,
         });
