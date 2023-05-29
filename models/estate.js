@@ -110,6 +110,18 @@ module.exports = class Estate extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: true,
         },
+        rightMoney: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        mainCategory: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        subCategory: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         lat: {
           type: Sequelize.STRING,
           allowNull: false,

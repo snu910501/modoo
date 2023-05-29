@@ -30,6 +30,9 @@ class EstateController {
         detail,
         lowestFloor,
         highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
       } = req.body;
 
       const images = req.files;
@@ -63,6 +66,9 @@ class EstateController {
         detail,
         lowestFloor,
         highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
         images
       );
       return res.status(200).json({ message: "매물 등록 성공" });
@@ -99,6 +105,9 @@ class EstateController {
         detail,
         lowestFloor,
         highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
       } = req.body;
 
       const images = req.files;
@@ -131,10 +140,13 @@ class EstateController {
         detail,
         lowestFloor,
         highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
         images
       );
 
-      return res.status(200).json({message : '매물 수정이 완료되었습니다.'})
+      return res.status(200).json({ message: '매물 수정이 완료되었습니다.' })
     } catch (err) {
       next(err);
     }
@@ -166,9 +178,10 @@ class EstateController {
 
   deleteEstate = async (req, res, next) => {
     try {
+      const userId = res.locals.userId;
       const { estateId } = req.params;
 
-      await this.estateService.deleteEstate(estateId);
+      await this.estateService.deleteEstate(estateId, userId);
       return res.status(200).json({ message: "매물을 삭제하였습니다." });
     } catch (err) {
       next(err);

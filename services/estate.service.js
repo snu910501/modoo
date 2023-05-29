@@ -34,6 +34,9 @@ class EstateService {
     detail,
     lowestFloor,
     highestFloor,
+    rightMoney,
+    mainCategory,
+    subCategory,
     images
   ) => {
     try {
@@ -80,6 +83,9 @@ class EstateService {
         detail,
         lowestFloor,
         highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
         lat,
         lng
       );
@@ -121,6 +127,9 @@ class EstateService {
     detail,
     lowestFloor,
     highestFloor,
+    rightMoney,
+    mainCategory,
+    subCategory,
     images
   ) => {
     try {
@@ -150,7 +159,10 @@ class EstateService {
         options,
         detail,
         lowestFloor,
-        highestFloor
+        highestFloor,
+        rightMoney,
+        mainCategory,
+        subCategory,
       );
 
       // S3에서 이미지 삭제하고 다시 저장
@@ -185,9 +197,9 @@ class EstateService {
     }
   };
 
-  deleteEstate = async (estateId) => {
+  deleteEstate = async (estateId, userId) => {
     try {
-      await this.estateRepository.deleteEstate(estateId);
+      await this.estateRepository.deleteEstate(estateId, userId);
       return;
     } catch (err) {
       throw err;

@@ -30,6 +30,9 @@ class EstateRepository {
     detail,
     lowestFloor,
     highestFloor,
+    rightMoney,
+    mainCategory,
+    subCategory,
     lat,
     lng
   ) => {
@@ -62,6 +65,9 @@ class EstateRepository {
         lowestFloor,
         highestFloor,
         detail,
+        rightMoney,
+        mainCategory,
+        subCategory,
         lat,
         lng,
       });
@@ -133,7 +139,10 @@ class EstateRepository {
     options,
     detail,
     lowestFloor,
-    highestFloor
+    highestFloor,
+    rightMoney,
+    mainCategory,
+    subCategory,
   ) => {
     try {
       const getEstate = await Estate.findOne({
@@ -170,6 +179,9 @@ class EstateRepository {
           options,
           lowestFloor,
           highestFloor,
+          rightMoney,
+          mainCategory,
+          subCategory,
           detail,
         },
         { where: { estateId: getEstate.estateId } }
@@ -280,14 +292,66 @@ class EstateRepository {
     }
   };
 
-  deleteEstate = async (estateId) => {
+  deleteEstate = async (estateId, userId) => {
     try {
-      await Estate.destroy({
+
+      // 로직은 일단 해당 매물이 존재하는지 확인부터합니다.
+      const estateExist = await Estate.findOne({
         where: {
           estateId: estateId,
-        },
-      });
-      return;
+          userId: userId,
+        }
+      })
+
+
+      // 매물이 존재한다면 Estate, PropertyOfDong DB에서 데이터들을 삭제,수정
+      // 해야하기 때문에 아래의 절차를 거칩니다.
+      if (estateExist) {
+        await Estate.destroy({
+          where: {
+            estateId: estateId,
+            userId: userId,
+          },
+        });
+
+        const nameOfDong = estateExist.addressOfJibun.split(' ')[2];
+
+        const dongExist = await PropertyOfDong.findOne({
+          where: {
+            userId: userId,
+            nameOfDong: nameOfDong
+          }
+        });
+
+        // 만약 해당 동에 매물이 1개인데 삭제를 한다면 0개가 되어버리기 때문에 
+        // 지도자체에서 동도 없애버려야 합니다.
+        if (dongExist.numOfDong == 1) {
+          console.log('hihisdfsdf');
+          await PropertyOfDong.destroy({
+            where: {
+              userId: userId,
+              nameOfDong: nameOfDong,
+            }
+          })
+        } else {
+          // 그게 아니라면 숫자를 하나 줄여야 겠죠?
+
+          await PropertyOfDong.update({
+            numOfDong: dongExist.numOfDong - 1,
+          },
+            {
+              where: {
+                userId: userId,
+                nameOfDong: nameOfDong,
+              }
+            })
+        }
+      } else {
+        // 이건 매물번호랑 계정아이디랑 다를때 나타나는 에러입니다.
+
+        throw new Error(501, '잘못된 접근입니다.');
+      }
+
     } catch (err) {
       throw err;
     }
