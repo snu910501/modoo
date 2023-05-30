@@ -3,13 +3,13 @@ const MapService = require('../services/map.service');
 class MapController {
   mapService = new MapService();
 
-  getMap = async(req,res,next) => {
-    try{
-      const {userId} = req.params;
+  getMap = async (req, res, next) => {
+    try {
+      const { userId } = req.params;
 
       const { swLatLng, neLatLng, zoomLevel } = req.body;
-      console.log('zz', swLatLng,neLatLng);
-      console.log('gg', typeof swLatLng);
+      console.log('zz', swLatLng, neLatLng);
+      console.log('gg', userId);
       const swLat = swLatLng.lat;
       const swLng = swLatLng.lng;
       const neLat = neLatLng.lat;
@@ -23,8 +23,8 @@ class MapController {
         neLng,
         zoomLevel
       );
-      return res.status(200).json({mapList})
-    } catch(err) {
+      return res.status(200).json({ mapList })
+    } catch (err) {
       next(err);
     }
   };
