@@ -6,6 +6,6 @@ const MapController = require('../controllers/map.controller');
 const mapController = new MapController();
 
 
-router.get('/:userId', mapController.getMap)
+router.post('/:userId', mapController.getMap)
 
 module.exports = router;
