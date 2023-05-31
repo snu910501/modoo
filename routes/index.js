@@ -14,6 +14,7 @@ router.use('/profile', profileRouter);
 router.use('/estate', estateRouter);
 router.use('/user',userRouter);
 router.use('/map', mapRouter);
+router.use('/realtor', realtorRouter);
 
 
 
