@@ -1,6 +1,7 @@
 const Estate = require("../models/estate");
 const { Op } = require("sequelize");
 const PropertyOfDong = require('../models/propertyOfDong');
+const User = require('../models/user');
 
 class MapRepository {
   getMap = async (userId, swLat, swLng, neLat, neLng, zoomLevel) => {
