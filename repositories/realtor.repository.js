@@ -9,7 +9,7 @@ class RealtorRepository {
           userId : userId
         },
         raw : true,
-        attributes : ['userName', 'userPhoneNumber', 'usercompanyName','userBusinessLocation', 'userProfileImgUrl', 'userCompanyTelNumber']
+        attributes : ['userName', 'userPhoneNumber', 'userCompanyName','userBusinessLocation', 'userProfileImgUrl', 'userCompanyTelNumber']
       });
 
       return userInfo;
