@@ -7,6 +7,7 @@ const profileRouter = require('./profile.routes');
 const estateRouter = require('./estate.routes');
 const mapRouter = require('./map.routes');
 const userRouter = require('./user.routes');
+const realtorRouter = require('./realtor.routes');
 
 router.use('/signup', authRouter);
 router.use('/login', loginRouter);

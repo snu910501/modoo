@@ -8,7 +8,7 @@ class RealtorController {
       const {userId} = req.params;
 
       const userInfo = await this.realtorServcie.getRealtor(userId);
-      return userInfo;
+      return res.status(200).json({userInfo : userInfo});
 
     } catch(err) {
       throw next(err);
