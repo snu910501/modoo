@@ -7,15 +7,21 @@ const isLoggedIn = async (req, res, next) => {
     console.log("headerssz", req.headers);
     const { authorization } = req.headers;
     const [authType, authToken] = (authorization || "").split(" ");
+
     if (!authToken || authType !== "Bearer") {
       throw new Error(501, "잘못된 접근입니다.");
-    }
+    };
     const { userkey } = req.headers;
-    console.log("heoo", authToken, userkey);
-    const { userId } = jwt.verify(authToken, process.env.JWT_SECRET);
 
+    // 이 부분이 조금 걸리는데 원래는 서버에서 받아와서 확인해야 하는데.........
+    // 이부분은 반드시 수정하자.
+    if(userkey.length <30 || userkey.length > 40) {
+      throw new Error(501,'잘못된 접근입니다.2');
+    };
+
+    const { userId } = jwt.verify(authToken, process.env.JWT_SECRET);
     res.locals.userId = userId;
-    console.log("ppa");
+    
     next();
   } catch (err) {
     next(err);

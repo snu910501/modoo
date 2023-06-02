@@ -71,6 +71,7 @@ class EstateController {
         subCategory,
         images
       );
+
       return res.status(200).json({ message: "매물 등록 성공" });
     } catch (err) {
       next(err);

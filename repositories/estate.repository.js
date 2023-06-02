@@ -151,6 +151,10 @@ class EstateRepository {
 
       if (!getEstate) {
         throw new Error(501, "존재하지 않는 매물입니다");
+      };
+
+      if(userId != getEstate.userId) {
+        throw new Error(501, '잘못된 접근 방법입니다.');
       }
 
       const estate = await Estate.update(

@@ -17,6 +17,6 @@ class RealtorRepository {
       throw err;
     }
   }
-}
+};
 
 module.exports = RealtorRepository;
