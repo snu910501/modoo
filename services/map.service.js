@@ -5,6 +5,7 @@ class MapService {
 
   getMap = async (userId, swLat, swLng, neLat, neLng, zoomLevel) => {
     try {
+      console.log(swLat, swLng, neLat, neLng)
       const mapList = await this.mapRepository.getMap(
         userId,
         swLat,

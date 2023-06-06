@@ -1,11 +1,13 @@
 const Estate = require("../models/estate");
 const { Op } = require("sequelize");
 const PropertyOfDong = require('../models/propertyOfDong');
+const PropertyImg = require('../models/propertyImg')
 const User = require('../models/user');
 
 class MapRepository {
   getMap = async (userId, swLat, swLng, neLat, neLng, zoomLevel) => {
     try {
+      console.log('swLat :', swLat, 'swLng :', swLng, 'neLat :', neLat, 'neLng :', neLng)
       if (zoomLevel < 4) {
         const mapList = await Estate.findAll({
           where: {
@@ -22,7 +24,22 @@ class MapRepository {
             [Op.not]: "options",
           },
         });
-        console.log('mapList', mapList);
+        const images = await Promise.all(
+          mapList.map(async (list) => {
+            const propertyImages = await PropertyImg.findAll({
+              where: {
+                estateId: list.estateId,
+              },
+              raw: true, // raw 옵션을 추가해 raw data로 조회
+              attributes: {
+                exclude: ["_previousDataValues"], // _previousDataValues 제외
+              },
+            });
+            list.imgs = propertyImages;
+            return propertyImages;
+          })
+        );
+
         return mapList;
       } else {
         const mapList = await Estate.findAll({
@@ -40,6 +57,21 @@ class MapRepository {
             [Op.not]: "options",
           },
         });
+        const images = await Promise.all(
+          mapList.map(async (list) => {
+            const propertyImages = await PropertyImg.findAll({
+              where: {
+                estateId: list.estateId,
+              },
+              raw: true, // raw 옵션을 추가해 raw data로 조회
+              attributes: {
+                exclude: ["_previousDataValues"], // _previousDataValues 제외
+              },
+            });
+            list.imgs = propertyImages;
+            return propertyImages;
+          })
+        );
         const dongList = await PropertyOfDong.findAll({
           where: { userId: userId },
           raw: true,

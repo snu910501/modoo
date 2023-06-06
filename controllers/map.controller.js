@@ -8,13 +8,12 @@ class MapController {
       const { userId } = req.params;
 
       const { swLatLng, neLatLng, zoomLevel } = req.body;
-      console.log('zz', swLatLng, neLatLng);
-      console.log('gg', userId);
+      console.log(typeof swLatLng)
       const swLat = swLatLng.lat;
       const swLng = swLatLng.lng;
       const neLat = neLatLng.lat;
       const neLng = neLatLng.lng;
-
+      console.log('pp', swLat, swLng, neLat, neLng)
       const mapList = await this.mapService.getMap(
         userId,
         swLat,

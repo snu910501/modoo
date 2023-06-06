@@ -153,7 +153,7 @@ class EstateRepository {
         throw new Error(501, "존재하지 않는 매물입니다");
       };
 
-      if(userId != getEstate.userId) {
+      if (userId != getEstate.userId) {
         throw new Error(501, '잘못된 접근 방법입니다.');
       }
 
@@ -228,6 +228,7 @@ class EstateRepository {
   };
 
   getEstateList = async (userId) => {
+    // 중개사 페이지에서 보유하고 있는 매물 리스트를 보여줌
     try {
       const estateList = await Estate.findAll({
         where: {
@@ -371,7 +372,9 @@ class EstateRepository {
       });
 
       return estates;
-    } catch (err) { }
+    } catch (err) {
+      throw err;
+    }
   };
 }
 
