@@ -11,6 +11,8 @@ class ProfileRepository {
     profileUrl,
     licenseUrl,
     startLocation,
+    startLocationLat,
+    startLocationLng,
   ) => {
     try {
       await User.update(
@@ -22,7 +24,9 @@ class ProfileRepository {
           userBusinessLocation: userBusinessLocation,
           userProfileImgUrl: profileUrl,
           userBusinessLicenseImgUrl: licenseUrl,
-          startLocation : startLocation,
+          startLocation: startLocation,
+          startLocationLat: startLocationLat,
+          startLocationLng: startLocationLng,
         },
         {
           where: { userId: userId },
@@ -50,6 +54,8 @@ class ProfileRepository {
           "userProfileImgUrl",
           "userCompanyTelNumber",
           "startLocation",
+          "startLocationLat",
+          "startLocationLng"
         ],
       });
 

@@ -61,8 +61,16 @@ module.exports = class User extends Sequelize.Model {
           defaultValue: false,
         },
         startLocation: {
-          type : Sequelize.STRING,
-          allowNull : true,
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        startLocationLat: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        startLocationLng: {
+          type: Sequelize.STRING,
+          allowNull: true,
         },
       },
       {

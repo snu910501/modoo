@@ -23,8 +23,12 @@ class ProfileService {
       // AWS S3에다가 저장하는 로직
       const profileUrl = await uploadProfileToS3(userId, userProfileImg);
       const licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
+      const { lat, lng } = await addressToGeo(startLocation);
 
+      const startLocationLat = lat;
+      const startLocationLng = lng;
       console.log("profileUrl", profileUrl, licenseUrl);
+      console.log('lat, lng', lat, lng)
 
       await this.profileRepository.setProfile(
         userId,
@@ -36,6 +40,8 @@ class ProfileService {
         profileUrl,
         licenseUrl,
         startLocation,
+        startLocationLat,
+        startLocationLng,
       );
       return;
     } catch (err) {
