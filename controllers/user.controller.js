@@ -1,5 +1,6 @@
 const UserService = require('../services/user.service');
 
+//관리자가 중개사들 리스트 볼 때 사용되는 API입니다.
 class UserController {
   userService = new UserService();
 

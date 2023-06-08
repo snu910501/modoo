@@ -11,6 +11,7 @@ class ProfileController {
         userPhoneNumber,
         userCompanyName,
         userBusinessLocation,
+        startLocation,
       } = req.body;
 
       const {
@@ -29,7 +30,8 @@ class ProfileController {
         userBusinessLocation,
         userProfileImg,
         userBusinessLicense,
-      )
+        startLocation,
+        );
 
       return res.status(200).json({ message: '정보를 수정하였습니다.' })
     } catch (err) {

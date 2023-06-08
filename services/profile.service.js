@@ -13,18 +13,18 @@ class ProfileService {
     userCompanyName,
     userBusinessLocation,
     userProfileImg,
-    userBusinessLicense
+    userBusinessLicense,
+    startLocation,
   ) => {
     try {
       //유효성 검사
       // 로그인한 유저가 다른 유저의 정보를 변경하려는 시도 감지
 
-
       // AWS S3에다가 저장하는 로직
       const profileUrl = await uploadProfileToS3(userId, userProfileImg);
       const licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
 
-      console.log('profileUrl', profileUrl, licenseUrl);
+      console.log("profileUrl", profileUrl, licenseUrl);
 
       await this.profileRepository.setProfile(
         userId,
@@ -34,10 +34,10 @@ class ProfileService {
         userCompanyName,
         userBusinessLocation,
         profileUrl,
-        licenseUrl
-      )
+        licenseUrl,
+        startLocation,
+      );
       return;
-
     } catch (err) {
       throw err;
     }
@@ -48,12 +48,12 @@ class ProfileService {
       // 로그인한 유저가 다른 유저의 정보를 가져오려는 행위 감지 유효성검사
 
       const user = this.profileRepository.getProfile(userId);
-      console.log('user', user);
+      console.log("user", user);
       return user;
     } catch (err) {
       throw err;
     }
-  }
+  };
 }
 
 module.exports = ProfileService;

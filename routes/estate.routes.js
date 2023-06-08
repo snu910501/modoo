@@ -42,6 +42,6 @@ router.delete(
   isLoggedIn,
   estateController.deleteEstate
 );
-router.get("/:estateId", isApproved, isLoggedIn, estateController.getEstate);
+router.get("/:estateId", estateController.getEstate);
 
 module.exports = router;
