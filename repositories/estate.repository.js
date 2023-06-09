@@ -2,6 +2,7 @@ const Estate = require("../models/estate");
 const PropertyImg = require("../models/propertyImg");
 const PropertyOfDong = require("../models/propertyOfDong");
 const Error = require("../modules/errorHandler");
+const User = require('../models/user')
 
 class EstateRepository {
   setEstate = async (
@@ -274,6 +275,7 @@ class EstateRepository {
 
   getEstate = async (estateId) => {
     try {
+
       const estate = await Estate.findOne({
         where: {
           estateId: estateId,
@@ -287,11 +289,27 @@ class EstateRepository {
         },
         raw: true,
       });
-      console.log("estate", estate, img);
-      estate.imgs = img;
-      console.log(estate);
 
-      return estate;
+      estate.imgs = img;
+      const user = await User.findOne({
+        where: {
+          userId: estate.userId,
+        },
+        raw: true,
+        attributes: [
+          "userId",
+          "userName",
+          "userEmail",
+          "userPhoneNumber",
+          "userCompanyName",
+          "userBusinessLocation",
+          "userBusinessLicenseImgUrl",
+          "userProfileImgUrl",
+          "userCompanyTelNumber",
+        ],
+      })
+
+      return { estate, user };
     } catch (err) {
       throw err;
     }

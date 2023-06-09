@@ -9,6 +9,17 @@ class MapRepository {
     try {
       console.log('swLat :', swLat, 'swLng :', swLng, 'neLat :', neLat, 'neLng :', neLng)
       if (zoomLevel < 4) {
+
+        const startLocation = await User.findOne({
+          where: {
+            userId: userId
+          },
+          raw: true,
+          attributes: ['startLocationLat', 'startLocationLng']
+        })
+
+        console.log('hahaha', startLocation)
+
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
@@ -40,8 +51,19 @@ class MapRepository {
           })
         );
 
-        return mapList;
+        return { mapList, startLocation };
       } else {
+
+        const startLocation = await User.findOne({
+          where: {
+            userId: userId
+          },
+          raw: true,
+          attributes: ['startLocationLat', 'startLocationLng']
+        })
+
+        console.log('hahaha', startLocation)
+
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
@@ -77,7 +99,7 @@ class MapRepository {
           raw: true,
         })
         console.log('mapList', mapList, dongList);
-        return { mapList, dongList };
+        return { mapList, dongList, startLocation };
       }
     } catch (err) {
       throw err;
