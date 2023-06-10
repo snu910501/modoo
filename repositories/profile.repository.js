@@ -15,25 +15,51 @@ class ProfileRepository {
     startLocationLng,
   ) => {
     try {
-      await User.update(
-        {
-          userName: userName,
-          userCompanyTelNumber: userCompanyTelNumber,
-          userPhoneNumber: userPhoneNumber,
-          userCompanyName: userCompanyName,
-          userBusinessLocation: userBusinessLocation,
-          userProfileImgUrl: profileUrl,
-          userBusinessLicenseImgUrl: licenseUrl,
-          startLocation: startLocation,
-          startLocationLat: startLocationLat,
-          startLocationLng: startLocationLng,
-        },
-        {
-          where: { userId: userId },
+      const userExist = await User.findOne({
+        where: {
+          userId: userId
         }
-      );
+      })
 
-      return;
+      if (userExist) {
+        console.log('유저 업데이트 repository')
+        await User.update(
+          {
+            userName: userName,
+            userCompanyTelNumber: userCompanyTelNumber,
+            userPhoneNumber: userPhoneNumber,
+            userCompanyName: userCompanyName,
+            userBusinessLocation: userBusinessLocation,
+            userProfileImgUrl: profileUrl,
+            userBusinessLicenseImgUrl: licenseUrl,
+            startLocation: startLocation,
+            startLocationLat: startLocationLat,
+            startLocationLng: startLocationLng,
+          },
+          {
+            where: { userId: userId },
+          }
+        );
+
+        return;
+      } else {
+        console.log('유저 생성 repository')
+        await User.create({
+          userId,
+          userName,
+          userCompanyTelNumber,
+          userPhoneNumber,
+          userCompanyName,
+          userBusinessLocation,
+          profileUrl,
+          licenseUrl,
+          startLocation,
+          startLocationLat,
+          startLocationLng,
+        })
+        return;
+      }
+
 
     } catch (err) {
       throw err;
