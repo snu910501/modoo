@@ -17,12 +17,23 @@ class ProfileService {
     startLocation,
   ) => {
     try {
+      let profileUrl = '';
+      let licenseUrl = '';
       //유효성 검사
       // 로그인한 유저가 다른 유저의 정보를 변경하려는 시도 감지
 
       // AWS S3에다가 저장하는 로직
-      const profileUrl = await uploadProfileToS3(userId, userProfileImg);
-      const licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
+      if (userProfileImg) {
+        console.log('hixx')
+        profileUrl = await uploadProfileToS3(userId, userProfileImg);
+        licenseUrl = await this.profileRepository.getLicenseUrl(userId);
+      }
+      if (userBusinessLicense) {
+        console.log('hizz')
+        profileUrl = await this.profileRepository.getProfileUrl(userId);
+        licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
+      }
+
       const { lat, lng } = await addressToGeo(startLocation);
 
       const startLocationLat = lat;

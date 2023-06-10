@@ -34,6 +34,7 @@ class ProfileRepository {
       );
 
       return;
+
     } catch (err) {
       throw err;
     }
@@ -62,6 +63,37 @@ class ProfileRepository {
       throw err;
     }
   };
+
+  getProfileUrl = async (userId) => {
+    try {
+      const profileUrl = await User.findOne({
+        where: {
+          userId: userId
+        },
+        raw: true,
+        attributes: ['userProfileImgUrl']
+      })
+
+      return profileUrl[0]
+    } catch (err) {
+      throw err;
+    }
+  };
+  getLicenseUrl = async (userId) => {
+    try {
+      const licenseUrl = await User.findOne({
+        where: {
+          userId: userId
+        },
+        raw: true,
+        attributes: ['userBusinessLicenseImgUrl']
+      })
+
+      return licenseUrl[0]
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = ProfileRepository;
