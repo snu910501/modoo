@@ -25,7 +25,7 @@ class ProfileService {
       // AWS S3에다가 저장하는 로직
       if (userProfileImg && userBusinessLicense) {
         profileUrl = await uploadProfileToS3(userId, userProfileImg);
-        profileUrl = await this.profileRepository.getProfileUrl(userId);
+        licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
       } else if (userProfileImg) {
         console.log('hixx')
         profileUrl = await uploadProfileToS3(userId, userProfileImg);
@@ -34,8 +34,8 @@ class ProfileService {
         profileUrl = await this.profileRepository.getProfileUrl(userId);
         licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
       } else {
-        profileUrl = await uploadProfileToS3(userId, userProfileImg);
-        licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
+        licenseUrl = await this.profileRepository.getLicenseUrl(userId);
+        profileUrl = await this.profileRepository.getProfileUrl(userId);
       }
 
       const { lat, lng } = await addressToGeo(startLocation);
