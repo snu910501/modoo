@@ -27,8 +27,6 @@ class ProfileService {
 
       const startLocationLat = lat;
       const startLocationLng = lng;
-      console.log("profileUrl", profileUrl, licenseUrl);
-      console.log('lat, lng', lat, lng)
 
       await this.profileRepository.setProfile(
         userId,
