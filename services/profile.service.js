@@ -23,14 +23,18 @@ class ProfileService {
       // 로그인한 유저가 다른 유저의 정보를 변경하려는 시도 감지
 
       // AWS S3에다가 저장하는 로직
-      if (userProfileImg) {
+      if (userProfileImg && userBusinessLicense) {
+        profileUrl = await uploadProfileToS3(userId, userProfileImg);
+        profileUrl = await this.profileRepository.getProfileUrl(userId);
+      } else if (userProfileImg) {
         console.log('hixx')
         profileUrl = await uploadProfileToS3(userId, userProfileImg);
         licenseUrl = await this.profileRepository.getLicenseUrl(userId);
-      }
-      if (userBusinessLicense) {
-        console.log('hizz')
+      } else if (userBusinessLicense) {
         profileUrl = await this.profileRepository.getProfileUrl(userId);
+        licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
+      } else {
+        profileUrl = await uploadProfileToS3(userId, userProfileImg);
         licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
       }
 
