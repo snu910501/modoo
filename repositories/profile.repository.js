@@ -50,7 +50,6 @@ class ProfileRepository {
           "userPhoneNumber",
           "userCompanyName",
           "userBusinessLocation",
-          "userBusinessLicenseImgUrl",
           "userProfileImgUrl",
           "userCompanyTelNumber",
         ],

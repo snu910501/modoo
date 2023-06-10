@@ -62,8 +62,6 @@ class MapRepository {
           attributes: ['startLocationLat', 'startLocationLng']
         })
 
-        console.log('hahaha', startLocation)
-
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
