@@ -7,10 +7,10 @@ const User = require('../models/user');
 class MapRepository {
   getMap = async (userId, swLat, swLng, neLat, neLng, zoomLevel) => {
     try {
-      console.log('swLat :', swLat, 'swLng :', swLng, 'neLat :', neLat, 'neLng :', neLng)
+
       if (zoomLevel < 4) {
 
-        const startLocation = await User.findOne({
+        const startLocations = await User.findOne({
           where: {
             userId: userId
           },
@@ -18,8 +18,8 @@ class MapRepository {
           attributes: ['startLocationLat', 'startLocationLng']
         })
 
-        console.log('hahaha', startLocation)
-
+        const startLocation = { 'lat': startLocations.startLocationLat, 'lng': startLocations.startLocationLng }
+        console.log('start', startLocation);
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
@@ -54,14 +54,14 @@ class MapRepository {
         return { mapList, startLocation };
       } else {
 
-        const startLocation = await User.findOne({
+        const startLocations = await User.findOne({
           where: {
             userId: userId
           },
           raw: true,
           attributes: ['startLocationLat', 'startLocationLng']
         })
-
+        const startLocation = { 'lat': startLocations.startLocationLat, 'lng': startLocations.startLocationLng }
         const mapList = await Estate.findAll({
           where: {
             userId: userId,
@@ -96,7 +96,7 @@ class MapRepository {
           where: { userId: userId },
           raw: true,
         })
-        console.log('mapList', mapList, dongList);
+        console.log('mapList', mapList, dongList, startLocation);
         return { mapList, dongList, startLocation };
       }
     } catch (err) {
