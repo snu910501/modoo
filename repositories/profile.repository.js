@@ -53,6 +53,7 @@ class ProfileRepository {
           "userBusinessLicenseImgUrl",
           "userProfileImgUrl",
           "userCompanyTelNumber",
+          "startLocation",
         ],
       });
 
