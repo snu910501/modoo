@@ -53,7 +53,7 @@ class ProfileService {
     try {
       // 로그인한 유저가 다른 유저의 정보를 가져오려는 행위 감지 유효성검사
 
-      const user = this.profileRepository.getProfile(userId);
+      const user = await this.profileRepository.getProfile(userId);
       console.log("user", user);
       return user;
     } catch (err) {
