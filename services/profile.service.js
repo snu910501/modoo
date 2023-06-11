@@ -24,6 +24,7 @@ class ProfileService {
 
       // AWS S3에다가 저장하는 로직
       if (userProfileImg && userBusinessLicense) {
+        console.log('nznznznz')
         profileUrl = await uploadProfileToS3(userId, userProfileImg);
         licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
       } else if (userProfileImg) {
@@ -31,9 +32,11 @@ class ProfileService {
         profileUrl = await uploadProfileToS3(userId, userProfileImg);
         licenseUrl = await this.profileRepository.getLicenseUrl(userId);
       } else if (userBusinessLicense) {
+        console.log('hizz')
         profileUrl = await this.profileRepository.getProfileUrl(userId);
         licenseUrl = await uploadLicenseToS3(userId, userBusinessLicense);
       } else {
+        console.log('higg')
         licenseUrl = await this.profileRepository.getLicenseUrl(userId);
         profileUrl = await this.profileRepository.getProfileUrl(userId);
       }
